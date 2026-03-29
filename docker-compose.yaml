@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:17
+    container_name: anadea-postgres
+    environment:
+      POSTGRES_DB: anadea_test
+      POSTGRES_USER: anadea
+      POSTGRES_PASSWORD: anadea
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U anadea -d anadea_test"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build: .
+    container_name: anadea-app
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/anadea_test
+      SPRING_DATASOURCE_USERNAME: anadea
+      SPRING_DATASOURCE_PASSWORD: anadea
+      VAADIN_PRODUCTIONMODE: true
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
