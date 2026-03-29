@@ -26,7 +26,7 @@ extra["vaadinVersion"] = "25.1.0"
 dependencies {
     // Source: https://mvnrepository.com/artifact/com.github.mvysny.karibudsl/karibu-dsl
     implementation("com.github.mvysny.karibudsl:karibu-dsl:2.6.0")
-
+    testImplementation("org.springframework.boot:spring-boot-testcontainers")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-liquibase")
     implementation("org.springframework.boot:spring-boot-starter-security")
@@ -43,6 +43,8 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-validation-test")
     testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+    testImplementation("org.testcontainers:testcontainers-junit-jupiter")
+    testImplementation("org.testcontainers:testcontainers-postgresql")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
